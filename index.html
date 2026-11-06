@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arthur Raymundi · Pôster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: cartaz de cinema. Navegação vertical fina à esquerda, cortes diagonais vermelho/laranja, tipografia condensada gigante. Tema único, de propósito. */
+:root{
+  --oxblood:#5A0E0A;
+  --red:#A5170F;
+  --orange:#FF5B1F;
+  --paper:#F3ECE2;
+  --ink:#0E0A09;
+  --font-display:"Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-body:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono:"DM Mono", ui-monospace, Menlo, monospace;
+  --rail:72px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--oxblood);color:var(--paper);font-family:var(--font-body);font-size:17px;line-height:1.55;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.mono{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
+h1,h2,h3{font-family:var(--font-display);font-weight:400;text-transform:uppercase;line-height:.86;margin:0;letter-spacing:-.005em;text-wrap:balance}
+
+/* ---------- side rail ---------- */
+.rail{position:fixed;inset:0 auto 0 0;width:var(--rail);z-index:40;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 0;border-right:1px solid #2a1512}
+.mark{font-family:var(--font-display);font-size:26px;line-height:1;text-decoration:none;color:var(--orange)}
+.rail nav{display:flex;flex-direction:column;gap:26px;align-items:center}
+.rail nav a{writing-mode:vertical-rl;transform:rotate(180deg);text-decoration:none;color:#BFAFA3;transition:color .2s}
+.rail nav a:hover{color:var(--orange)}
+.burger{width:44px;height:44px;border-radius:50%;border:1px solid #4a2a24;background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--paper)}
+.burger span{display:block;width:18px;height:2px;background:currentColor;box-shadow:0 6px 0 currentColor,0 -6px 0 currentColor}
+.burger:hover{border-color:var(--orange);color:var(--orange)}
+
+/* ---------- overlay menu with diagonal wipe ---------- */
+.menu{position:fixed;inset:0;z-index:60;background:var(--orange);color:var(--ink);clip-path:polygon(0 0,0 0,0 100%,0 100%);transition:clip-path .7s cubic-bezier(.77,0,.18,1);display:flex;flex-direction:column;justify-content:center;padding:40px clamp(24px,8vw,120px);visibility:hidden}
+.menu.open{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);visibility:visible}
+.menu ol{list-style:none;margin:0;padding:0;counter-reset:m}
+.menu li{counter-increment:m;overflow:hidden}
+.menu a{display:flex;align-items:baseline;gap:20px;text-decoration:none;font-family:var(--font-display);font-size:clamp(56px,11vw,150px);line-height:.95;text-transform:uppercase;transform:translateY(110%);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.menu a::before{content:"0" counter(m);font-family:var(--font-mono);font-size:14px;letter-spacing:.1em}
+.menu.open a{transform:none}
+.menu.open li:nth-child(2) a{transition-delay:.06s}.menu.open li:nth-child(3) a{transition-delay:.12s}.menu.open li:nth-child(4) a{transition-delay:.18s}.menu.open li:nth-child(5) a{transition-delay:.24s}
+.menu a:hover{color:var(--paper)}
+.menu .close{position:absolute;top:24px;right:24px;background:var(--ink);color:var(--orange);border:0;border-radius:999px;padding:12px 18px;cursor:pointer;font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.menu .foot{position:absolute;bottom:28px;left:clamp(24px,8vw,120px);right:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+main{margin-left:var(--rail)}
+
+/* ---------- hero: diagonal split ---------- */
+.hero{position:relative;min-height:max(680px,min(100vh,920px));min-height:max(680px,min(100svh,920px));overflow:hidden;background:var(--red);isolation:isolate}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;clip-path:polygon(38% 0,100% 0,100% 62%,22% 100%,0 100%,0 74%);}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;background:var(--orange);clip-path:polygon(100% 54%,100% 100%,30% 100%);}
+.hero-top{position:absolute;top:24px;left:28px;right:28px;z-index:3;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:10px;background:var(--ink);padding:8px 14px;border-radius:999px}
+.pill i{width:8px;height:8px;border-radius:50%;background:#3BD47E;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.hero h1{position:absolute;z-index:2;left:24px;right:24px;top:52%;transform:translateY(-46%) rotate(-6deg);transform-origin:left center;font-size:clamp(60px,12.5vw,220px);color:var(--paper);mix-blend-mode:normal}
+.hero h1 .row{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .row > span{display:inline-block;animation:up 1s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 .row:nth-child(2) > span{animation-delay:.1s;color:var(--orange)}
+.hero h1 .row:nth-child(3) > span{animation-delay:.2s}
+.hero h1 .out{color:transparent;-webkit-text-stroke:2px var(--paper)}
+@keyframes up{from{transform:translateY(105%)}to{transform:none}}
+.hero-bottom{position:absolute;z-index:3;right:28px;bottom:28px;left:28px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;color:var(--ink)}
+.hero-bottom p{max-width:36ch;margin:0;font-weight:500;font-size:17px;line-height:1.45;background:var(--ink);color:var(--paper);padding:14px 18px;border-left:4px solid var(--orange)}
+.scroll{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.scroll b{width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--orange);display:grid;place-items:center;font-family:var(--font-body);font-size:20px}
+
+/* ---------- marquee ---------- */
+.marquee{background:var(--ink);overflow:hidden;border-block:1px solid #2a1512;transform:rotate(-1.4deg) scale(1.03);margin:-14px 0 0;position:relative;z-index:4}
+.track{display:flex;width:max-content;animation:slide 32s linear infinite}
+.track span{font-family:var(--font-display);font-size:clamp(36px,5vw,64px);text-transform:uppercase;padding:14px 0;white-space:nowrap}
+.track span::after{content:"✕";color:var(--orange);font-size:.5em;vertical-align:middle;margin:0 28px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- section shells ---------- */
+.block{padding:clamp(72px,10vw,140px) clamp(20px,5vw,72px);position:relative}
+.label{display:flex;gap:16px;align-items:center;margin-bottom:28px;color:var(--orange)}
+.label::after{content:"";height:1px;flex:1;background:currentColor;opacity:.4}
+.big{font-size:clamp(64px,12vw,200px)}
+
+/* ---------- projects ---------- */
+.projects{background:var(--oxblood)}
+.proj{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);padding:clamp(28px,4vw,56px);margin-top:40px;position:relative;overflow:hidden}
+.proj.a{background:var(--orange);color:var(--ink);clip-path:polygon(0 0,100% 4%,100% 100%,0 96%)}
+.proj.b{background:var(--paper);color:var(--ink);clip-path:polygon(0 4%,100% 0,100% 96%,0 100%)}
+.proj .num{position:absolute;right:-0.04em;bottom:-0.18em;font-family:var(--font-display);font-size:clamp(200px,32vw,460px);line-height:1;opacity:.12;pointer-events:none}
+.proj h3{font-size:clamp(48px,6.4vw,108px);overflow-wrap:anywhere}
+.proj .meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin:14px 0 22px}
+.proj p{margin:0 0 14px;max-width:58ch;position:relative}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin:24px 0;position:relative}
+.stats div{padding:14px 10px 12px 0}
+.stats div + div{border-left:2px solid var(--ink);padding-left:14px}
+.stats b{display:block;font-family:var(--font-display);font-weight:400;font-size:clamp(30px,3.4vw,52px);line-height:1;font-variant-numeric:tabular-nums}
+.tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0;position:relative}
+.tags li{border:1.5px solid var(--ink);border-radius:999px;padding:5px 12px;font-family:var(--font-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+.term{background:var(--ink);color:var(--paper);border-radius:6px;overflow:hidden;align-self:start;position:relative;box-shadow:12px 12px 0 rgba(14,10,9,.25)}
+.term header{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #2c201d;color:#BFAFA3}
+.term pre{margin:0;padding:16px;font-family:var(--font-mono);font-size:13px;line-height:1.7;overflow-x:auto;white-space:pre}
+.k{color:var(--orange)} .c{color:#8F7E74} .s{color:#F2C36B}
+.wa{padding:18px;display:flex;flex-direction:column;gap:10px}
+.wa .msg{align-self:flex-end;background:#1F3B2C;border-radius:12px 12px 2px 12px;padding:10px 12px;font-size:14px;line-height:1.5;max-width:94%}
+.wa small{display:block;text-align:right;color:#9FB8A9;font-family:var(--font-mono);font-size:11px;margin-top:4px}
+.extra{list-style:none;margin:0;padding:14px 16px 16px;display:grid;gap:8px;font-size:14px}
+.extra li::before{content:"→ ";color:var(--orange)}
+
+/* ---------- timeline ---------- */
+.timeline{background:var(--ink)}
+.rows{border-top:1px solid #3a2420}
+.row-item{display:grid;grid-template-columns:200px minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:26px 0;border-bottom:1px solid #3a2420;transition:background .25s,padding .25s}
+.row-item:hover{background:var(--red);padding-inline:20px}
+.row-item h3{font-size:clamp(32px,4.4vw,64px);line-height:.95}
+.row-item p{margin:8px 0 0;color:#CDBFB4;max-width:60ch}
+.row-item .when{color:var(--orange)}
+.row-item .kind{color:#BFAFA3}
+.row-item.now .kind{color:var(--ink);background:var(--orange);padding:4px 10px;border-radius:999px}
+
+/* ---------- skills ---------- */
+.skills{background:var(--red)}
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:0 48px}
+.sk{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid rgba(243,236,226,.28)}
+.sk span:first-child{font-family:var(--font-display);font-size:clamp(28px,3vw,40px);text-transform:uppercase;line-height:1}
+.sk .lv{display:flex;gap:5px;align-items:center}
+.sk .lv i{width:22px;height:8px;background:rgba(243,236,226,.25);transform:skewX(-20deg)}
+.sk .lv i.on{background:var(--orange)}
+.sk .lv em{font-style:normal;margin-left:10px;min-width:8.5em;text-align:right;white-space:nowrap}
+.skill-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.skill-head p{margin:0;max-width:40ch;color:#F6D8CC}
+
+/* ---------- about ---------- */
+.about{background:var(--paper);color:var(--ink)}
+.about .label{color:var(--red)}
+.about-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(28px,5vw,80px)}
+.about h2{font-size:clamp(52px,7.5vw,120px)}
+.about h2 em{font-style:normal;color:var(--red)}
+.about p{margin:0 0 16px;max-width:58ch}
+.facts{display:grid;gap:0;border-top:2px solid var(--ink)}
+.facts div{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid rgba(14,10,9,.25)}
+.facts dt{margin:0}
+.facts dd{margin:0;font-weight:700;text-align:right}
+
+/* ---------- contact ---------- */
+.contact{background:var(--orange);color:var(--ink);clip-path:polygon(0 6%,100% 0,100% 100%,0 100%);padding-top:clamp(110px,14vw,180px)}
+.contact .label{color:var(--ink)}
+.contact h2{font-size:clamp(64px,11vw,200px)}
+.mail{display:inline-block;font-family:var(--font-display);font-size:clamp(28px,5.4vw,84px);text-transform:lowercase;line-height:1;margin:28px 0 8px;text-decoration:none;border-bottom:4px solid var(--ink);overflow-wrap:anywhere}
+.mail:hover{color:var(--paper);border-color:var(--paper)}
+.contact-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:14px 22px;text-decoration:none;font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn.live{margin-top:22px;position:relative}
+.btn.live:hover{background:var(--paper);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--orange)}
+.phone{margin-top:20px}
+footer{background:var(--ink);padding:24px clamp(20px,5vw,72px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:#BFAFA3}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .proj,.about-grid{grid-template-columns:1fr}
+  .row-item{grid-template-columns:1fr;gap:6px}
+}
+@media (max-width:700px){
+  :root{--rail:0px}
+  .rail{inset:0 0 auto 0;width:auto;height:60px;flex-direction:row;padding:0 16px;border-right:0;border-bottom:1px solid #2a1512}
+  .rail nav{display:none}
+  main{padding-top:60px}
+  .hero{min-height:640px}
+  .hero h1{transform:translateY(-50%) rotate(-6deg)}
+  .hero canvas{clip-path:polygon(50% 0,100% 0,100% 55%,10% 100%,0 100%,0 80%)}
+  .stats{grid-template-columns:1fr 1fr 1fr}
+  .stats b{font-size:34px}
+  .sk .lv em{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <a class="mark" href="#topo" aria-label="Início">AR</a>
+  <nav class="mono" aria-label="Seções">
+    <a href="#projetos">Projetos</a>
+    <a href="#trajetoria">Trajetória</a>
+    <a href="#stack">Stack</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <button class="burger" id="menu-open" type="button" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false"><span></span></button>
+</aside>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <button class="close" id="menu-close" type="button">Fechar ✕</button>
+  <ol>
+    <li><a href="#topo">Início</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#trajetoria">Trajetória</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ol>
+  <div class="foot mono"><span>Arthur Alves Raymundi</span><span>Jundiaí · SP</span></div>
+</div>
+
+<main>
+  <section class="hero" id="topo">
+    <canvas id="reel" aria-hidden="true"></canvas>
+    <div class="hero-top mono">
+      <span class="pill"><i aria-hidden="true"></i>Disponível para estágio</span>
+      <span class="pill">Eng. de Software · PUC-Campinas</span>
+    </div>
+    <h1 aria-label="Arthur Raymundi, do banco ao botão">
+      <span class="row"><span>Arthur</span></span>
+      <span class="row"><span>Raymundi</span></span>
+      <span class="row"><span class="out">do banco ao botão</span></span>
+    </h1>
+    <div class="hero-bottom">
+      <p>Dev full stack em formação. Python e Node.js no backend, JavaScript no front e um site em produção para cliente real.</p>
+      <a class="scroll mono" href="#projetos"><b aria-hidden="true">↓</b>Ver projetos</a>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>Python</span><span>JavaScript</span><span>Node.js</span><span>MySQL</span><span>APIs REST</span><span>TypeScript</span><span>PostgreSQL</span><span>MongoDB</span><span>Git</span><span>C</span>
+      <span>Python</span><span>JavaScript</span><span>Node.js</span><span>MySQL</span><span>APIs REST</span><span>TypeScript</span><span>PostgreSQL</span><span>MongoDB</span><span>Git</span><span>C</span>
+    </div>
+  </div>
+
+  <section class="block projects" id="projetos">
+    <div class="label mono"><span>01 / Projetos</span></div>
+    <h2 class="big">Trabalho<br>em cartaz</h2>
+
+    <article class="proj a">
+      <span class="num" aria-hidden="true">01</span>
+      <div>
+        <div class="meta mono"><span>Freelance</span><span>Out 2026 – presente</span><span>Jundiaí, SP</span></div>
+        <h3>MGourmet</h3>
+        <p style="margin-top:18px">Site de pedidos de marmitas fit, feito do zero: landing page, cardápio por categorias e carrinho de compras. O pedido fecha no WhatsApp com a mensagem já montada.</p>
+        <p>HTML5, CSS3 e JavaScript puro, sem frameworks. Carrinho com persistência em localStorage e validação de dados, layout responsivo para celular e desktop.</p>
+        <div class="stats">
+          <div><b>~1.300</b><span class="mono">linhas de JS</span></div>
+          <div><b>0</b><span class="mono">frameworks</span></div>
+          <div><b>3</b><span class="mono">docs técnicos</span></div>
+        </div>
+        <ul class="tags"><li>HTML5</li><li>CSS3</li><li>Vanilla JS</li><li>localStorage</li><li>CSP</li><li>ARIA</li></ul>
+        <a class="btn live" href="https://mgourmet.netlify.app/">Ver site no ar ↗</a>
+      </div>
+      <div class="term">
+        <header class="mono"><span>whatsapp · pedido</span><span>exemplo</span></header>
+        <div class="wa">
+          <div class="msg">Olá! Quero fazer um pedido:<br>• 2× Marmita (categoria)<br>• 1× Marmita (categoria)<br>Total: R$ —<small>mensagem montada pelo site</small></div>
+        </div>
+        <ul class="extra">
+          <li>Content Security Policy e cabeçalhos HTTP</li>
+          <li>Navegação por teclado e ARIA</li>
+          <li>Docs de design system, frontend e segurança</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="proj b">
+      <span class="num" aria-hidden="true">02</span>
+      <div>
+        <div class="meta mono"><span>PUC-Campinas</span><span>Jan – Jun 2026</span><span>Projeto Integrador I</span></div>
+        <h3>Urna<br>Eletrônica</h3>
+        <p style="margin-top:18px">Liderei uma equipe de 4 pessoas: dividi tarefas, defini funcionalidades e acompanhei as entregas até o fim.</p>
+        <p>Escrevi o backend em Python com votação, cadastro de candidatos e eleitores, auditoria e estatísticas. Integração com MySQL via mysql-connector-python, código em camadas e registro de logs.</p>
+        <div class="stats">
+          <div><b>4</b><span class="mono">na equipe</span></div>
+          <div><b>3</b><span class="mono">camadas</span></div>
+          <div><b>5</b><span class="mono">módulos</span></div>
+        </div>
+        <ul class="tags"><li>Python</li><li>MySQL</li><li>Logging</li><li>Git</li><li>GitHub</li></ul>
+      </div>
+      <div class="term">
+        <header class="mono"><span>urna/</span><span>python</span></header>
+<pre><span class="k">urna/</span>
+├── <span class="k">models/</span>     <span class="c"># eleitor, candidato, voto</span>
+├── <span class="k">database/</span>   <span class="c"># conexão MySQL</span>
+├── <span class="k">utils/</span>      <span class="c"># validação e logs</span>
+└── main.py
+
+<span class="c">módulos:</span>
+  <span class="s">votação</span> · <span class="s">candidatos</span> · <span class="s">eleitores</span>
+  <span class="s">auditoria</span> · <span class="s">estatísticas</span></pre>
+      </div>
+    </article>
+  </section>
+
+  <section class="block timeline" id="trajetoria">
+    <div class="label mono"><span>02 / Trajetória</span></div>
+    <h2 class="big" style="margin-bottom:48px">Até<br>aqui</h2>
+    <div class="rows">
+      <div class="row-item now">
+        <span class="when mono">Out 2026 – hoje</span>
+        <div><h3>Dev Front-end · MGourmet</h3><p>Site de pedidos publicado e em uso, construído do zero: <a href="https://mgourmet.netlify.app/">mgourmet.netlify.app</a></p></div>
+        <span class="kind mono">Freelance</span>
+      </div>
+      <div class="row-item">
+        <span class="when mono">Jan – Jun 2026</span>
+        <div><h3>Líder de equipe · Urna Eletrônica</h3><p>Projeto Integrador I na PUC-Campinas, com 4 integrantes.</p></div>
+        <span class="kind mono">Extracurricular</span>
+      </div>
+      <div class="row-item">
+        <span class="when mono">Fev 2026 – Dez 2029</span>
+        <div><h3>Engenharia de Software · PUC-Campinas</h3><p>Bacharelado na Pontifícia Universidade Católica de Campinas, no 2º período.</p></div>
+        <span class="kind mono">Formação</span>
+      </div>
+      <div class="row-item">
+        <span class="when mono">Jan 2025</span>
+        <div><h3>Voluntário · ONG Sonhar Acordado</h3><p>Atividades recreativas em equipe para crianças em situação de vulnerabilidade social.</p></div>
+        <span class="kind mono">Voluntariado</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block skills" id="stack">
+    <div class="label mono" style="color:var(--paper)"><span>03 / Stack</span></div>
+    <div class="skill-head">
+      <h2 class="big">Ferra&shy;mentas</h2>
+      <p>Nível declarado em cada uma. Uso o Claude no dia a dia para arquitetar, acelerar e revisar código.</p>
+    </div>
+    <div class="skill-grid" id="skills"></div>
+  </section>
+
+  <section class="block about" id="sobre">
+    <div class="label mono"><span>04 / Sobre</span></div>
+    <div class="about-grid">
+      <div>
+        <h2>Base em C,<br>cabeça de <em>produto</em></h2>
+        <p style="margin-top:28px">Estudo Engenharia de Software na PUC-Campinas e já entreguei um site em produção para um negócio real. Cuido de segurança, acessibilidade e documentação desde o primeiro commit.</p>
+        <p>Procuro um estágio em desenvolvimento de software para construir soluções escaláveis com boas práticas de engenharia.</p>
+      </div>
+      <dl class="facts mono">
+        <div><dt>Local</dt><dd>Jundiaí, SP</dd></div>
+        <div><dt>Disponível</dt><dd>Tardes, até 6h/dia</dd></div>
+        <div><dt>Inglês</dt><dd>Fluente</dd></div>
+        <div><dt>Espanhol</dt><dd>Intermediário</dd></div>
+        <div><dt>Formatura</dt><dd>Dez 2029</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block contact" id="contato">
+    <div class="label mono"><span>05 / Contato</span></div>
+    <h2>Bora<br>conversar?</h2>
+    <a class="mail" href="mailto:arthurraymundi@gmail.com">arthurraymundi@gmail.com</a>
+    <div class="contact-row">
+      <button class="btn" type="button" id="copy-email">Copiar e-mail</button>
+      <a class="btn ghost" href="https://linkedin.com/in/arthurraymundi">LinkedIn ↗</a>
+      <a class="btn ghost" href="https://github.com/arthurraymundi">GitHub ↗</a>
+    </div>
+    <p class="phone mono">Telefone / WhatsApp: <a href="tel:+5511989354831">(11) 9 8935-4831</a></p>
+  </section>
+
+  <footer class="mono"><span>Arthur Alves Raymundi</span><span>Jundiaí · 2026</span></footer>
+</main>
+
+<script>
+/* skills */
+const skills = [
+  ["Python",2],["JavaScript",2],["HTML5",3],["CSS3",2],["C",2],["TypeScript",1],
+  ["Node.js",1],["APIs REST",2],["MySQL",2],["PostgreSQL",1],["MongoDB",1],["Git",2],
+  ["GitHub",2],["Claude (IA)",3],["Excel",2],["Power BI",1],["Power Automate",1],["Power Apps",1]
+];
+const names = ["","Básico","Intermediário","Avançado"];
+document.getElementById("skills").innerHTML = skills.map(([n,l]) =>
+  `<div class="sk"><span>${n}</span><span class="lv" aria-label="${names[l]}">${[1,2,3].map(i=>`<i class="${i<=l?"on":""}"></i>`).join("")}<em class="mono">${names[l]}</em></span></div>`
+).join("");
+
+/* menu */
+const menu = document.getElementById("menu"), openBtn = document.getElementById("menu-open"), closeBtn = document.getElementById("menu-close");
+function setMenu(open){
+  menu.classList.toggle("open", open);
+  menu.setAttribute("aria-hidden", String(!open));
+  openBtn.setAttribute("aria-expanded", String(open));
+  if (open) closeBtn.focus(); else openBtn.focus();
+}
+openBtn.addEventListener("click", () => setMenu(true));
+closeBtn.addEventListener("click", () => setMenu(false));
+menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && menu.classList.contains("open")) setMenu(false); });
+
+/* copy */
+const copyBtn = document.getElementById("copy-email");
+copyBtn.addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText("arthurraymundi@gmail.com"); copyBtn.textContent = "Copiado ✓"; }
+  catch { copyBtn.textContent = "arthurraymundi@gmail.com"; }
+  setTimeout(() => copyBtn.textContent = "Copiar e-mail", 2000);
+});
+
+/* hero "footage": rolling code reel with grain */
+(() => {
+  const cv = document.getElementById("reel"), ctx = cv.getContext("2d");
+  const lines = [
+    "def registrar_voto(eleitor, candidato):",
+    "    if not eleitor.pode_votar():",
+    "        log.warning('voto bloqueado')",
+    "    cursor.execute(INSERT_VOTO, dados)",
+    "const carrinho = carregarCarrinho();",
+    "localStorage.setItem('carrinho', json);",
+    "const msg = montarMensagem(itens);",
+    "window.location.href = linkWhatsApp(msg);",
+    "Content-Security-Policy: default-src 'self'",
+    "SELECT candidato, COUNT(*) FROM votos",
+    "GROUP BY candidato ORDER BY 2 DESC;",
+    "app.get('/api/pedidos', listar);",
+    "aria-label=\"Adicionar ao carrinho\"",
+    "git commit -m \"feat: auditoria da urna\"",
+    "#include <stdio.h>",
+    "int main(void) { return 0; }"
+  ];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w, h, dpr, cols, t = 0;
+  function size(){
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const colW = Math.max(300, w / 3);
+    cols = Array.from({length: Math.ceil(w / colW) + 1}, (_, i) => ({x: i * colW + 16, speed: 18 + (i % 3) * 9, off: i * 137}));
+  }
+  function draw(){
+    ctx.fillStyle = "#170807"; ctx.fillRect(0,0,w,h);
+    const lh = 22;
+    ctx.font = "500 14px 'DM Mono', monospace";
+    cols.forEach((c, ci) => {
+      const shift = (t * c.speed + c.off) % (lines.length * lh);
+      for (let y = -lh * 2, n = 0; y < h + lh; y += lh, n++) {
+        const idx = (Math.floor((y + shift) / lh) % lines.length + lines.length) % lines.length;
+        const yy = y - ((y + shift) % lh);
+        const hot = (idx + ci) % 7 === 0;
+        ctx.fillStyle = hot ? "rgba(255,91,31,.95)" : "rgba(243,236,226," + (0.18 + ((idx * 13 + ci) % 5) * 0.06) + ")";
+        ctx.fillText(lines[idx], c.x, yy);
+      }
+    });
+    // scanlines + grain
+    ctx.fillStyle = "rgba(0,0,0,.18)";
+    for (let y = 0; y < h; y += 3) ctx.fillRect(0, y, w, 1);
+    for (let i = 0; i < 600; i++) {
+      ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.05})`;
+      ctx.fillRect(Math.random()*w, Math.random()*h, 1.5, 1.5);
+    }
+    // red tint
+    ctx.fillStyle = "rgba(165,23,15,.28)"; ctx.fillRect(0,0,w,h);
+  }
+  let last = performance.now();
+  function loop(now){
+    t += Math.min(0.05, (now - last) / 1000); last = now;
+    draw();
+    if (!reduce) requestAnimationFrame(loop);
+  }
+  size(); addEventListener("resize", size);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => draw());
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
